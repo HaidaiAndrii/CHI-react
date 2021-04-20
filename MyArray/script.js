@@ -3,13 +3,10 @@ function MyArray() {
     for (let i = 0; i < arguments.length; i++) {
         this[i] = arguments[i];
     }
+
     Object.defineProperty(this, 'length', {
         get: function() {
-            let count = 0;
-            for (key in this) {
-                count++;
-            }
-            return count - 1;
+            return Object.keys(this).length
         }
     });
 }
@@ -23,5 +20,24 @@ MyArray.prototype.push = function() {
 
     return this.length;
 }
+
+MyArray.prototype.unshift = function() {
+
+
+    for (let j = arguments.length; j > 0; j--) {
+        for (let i = this.length; i > 0; i--) {
+            this[i] = this[i - 1];
+        }
+    }
+
+    for (let i = 0; i < arguments.length; i++) {
+        this[i] = arguments[i];
+    }
+
+    return this.length;
+};
+
+
+
 
 let arr = new MyArray();
