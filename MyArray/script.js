@@ -3,10 +3,15 @@ function MyArray() {
     for (let i = 0; i < arguments.length; i++) {
         this[i] = arguments[i];
     }
-
-
-    this.length = arguments.length;
-
+    Object.defineProperty(this, 'length', {
+        get: function() {
+            let count = 0;
+            for (key in this) {
+                count++;
+            }
+            return count - 1;
+        }
+    });
 }
 
 MyArray.prototype.push = function() {
@@ -19,5 +24,4 @@ MyArray.prototype.push = function() {
     return this.length;
 }
 
-
-let some = new MyArray();
+let arr = new MyArray();
