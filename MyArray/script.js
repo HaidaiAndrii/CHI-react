@@ -37,7 +37,14 @@ MyArray.prototype.unshift = function() {
     return this.length;
 };
 
+MyArray.prototype.map = function(callback) {
+    let res = [];
 
+    for (let i = 0; i < this.length; i++) {
+        res[i] = callback(this[i]);
+    }
 
+    return res;
+}
 
 let arr = new MyArray();
