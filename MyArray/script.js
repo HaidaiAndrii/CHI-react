@@ -41,10 +41,19 @@ MyArray.prototype.map = function(callback) {
     let res = [];
 
     for (let i = 0; i < this.length; i++) {
-        res[i] = callback(this[i]);
+        res[i] = callback(this[i], i, this);
     }
 
     return res;
 }
+
+MyArray.prototype.forEach = function(callback) {
+    for (let i = 0; i < this.length; i++) {
+        callback(this[i], i, this);
+    }
+
+    return undefined;
+}
+
 
 let arr = new MyArray();
