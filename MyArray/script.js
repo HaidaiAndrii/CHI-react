@@ -81,8 +81,17 @@ MyArray.prototype.pop = function() {
 };
 
 
-let arr = new MyArray();
-console.log(arr);
-console.log(arr.pop());
-arr.pop();
-console.log(arr);
+MyArray.prototype.toString = function() {
+    let str = '';
+    for (let i = 0; i < this.length; i++) {
+        if (i === this.length - 1) {
+            str += `${this[i]}`;
+        } else {
+            str += `${this[i]},`
+        }
+    }
+
+    return str;
+}
+
+let arr = new MyArray(1, 2, 3, 4, 5, [1, 2, 3], { 1: 2 }, '123');
