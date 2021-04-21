@@ -94,4 +94,20 @@ MyArray.prototype.toString = function() {
     return str;
 }
 
+MyArray.prototype.reduce = function(callback, initialValue) {
+    let currentValue = initialValue;
+    let index = 0;
+
+    if (currentValue === undefined) {
+        index = 1;
+        currentValue = this[0];
+    }
+
+    for (index; index < this.length; index++) {
+        currentValue = callback(currentValue, this[index], index, this);
+    }
+
+    return currentValue;
+};
+
 let arr = new MyArray(1, 2, 3, 4, 5, [1, 2, 3], { 1: 2 }, '123');
