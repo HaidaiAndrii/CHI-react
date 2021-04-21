@@ -1,7 +1,9 @@
 function MyArray(...args) {
 
     for (let i = 0; i < args.length; i++) {
-        this[i] = args[i];
+        if (args[i] != undefined) {
+            this[i] = args[i];
+        }
     }
 
     Object.defineProperty(this, 'length', {
@@ -9,8 +11,8 @@ function MyArray(...args) {
             return Object.keys(this).length;
         },
     });
-
 }
+
 
 MyArray.prototype.push = function(...args) {
     if (args) {
@@ -70,12 +72,7 @@ MyArray.prototype.filter = function(callback) {
 MyArray.prototype.pop = function() {
     const deletedItem = this[this.length - 1];
 
-    // if (this.length == 0) {
-    //     return undefined;
-    // }
-
     delete this[this.length - 1];
-
 
     return deletedItem;
 };
@@ -87,13 +84,6 @@ MyArray.prototype.toString = function() {
 
         i === this.length - 1 ? str += `${this[i]}` : str += `${this[i]},`;
     }
-
-    // if (i === this.length - 1) {
-    //     str += `${this[i]}`;
-    // } else {
-    //     str += `${this[i]},`
-    // }
-
 
     return str;
 }
@@ -114,4 +104,39 @@ MyArray.prototype.reduce = function(callback, initialValue) {
     return currentValue;
 };
 
-let arr = new MyArray(1, 2, 3, 4, 5, [1, 2, 3], { 1: 2 }, '123');
+MyArray.prototype.sortFunction = (fElement, sElement) => {
+    firstElement = toString(fElement);
+    secondElement = toString(sElement);
+
+
+    if (firstElement > secondElement) {
+        return 1;
+    }
+
+    if (firstElement < secondElement) {
+        return -1;
+    }
+
+    if (firstElement = secondElement) {
+        return 0;
+    }
+}
+
+MyArray.prototype.sort = function(callback = this.sortFunction) {
+    for (let i = 1; i < this.length; i++) {
+
+        for (let j = i; j > 0; j--) {
+
+            if (callback(this[j], this[j - 1])) {
+                const temp = this[j];
+                this[j] = this[j - 1];
+                this[j - 1] = temp;
+            } else {
+                break;
+            }
+        }
+    }
+    return this;
+}
+
+let arr = new MyArray(1, 2, 3, 4, 5);
