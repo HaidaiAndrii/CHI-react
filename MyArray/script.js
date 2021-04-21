@@ -84,12 +84,16 @@ MyArray.prototype.pop = function() {
 MyArray.prototype.toString = function() {
     let str = '';
     for (let i = 0; i < this.length; i++) {
-        if (i === this.length - 1) {
-            str += `${this[i]}`;
-        } else {
-            str += `${this[i]},`
-        }
+
+        i === this.length - 1 ? str += `${this[i]}` : str += `${this[i]},`;
     }
+
+    // if (i === this.length - 1) {
+    //     str += `${this[i]}`;
+    // } else {
+    //     str += `${this[i]},`
+    // }
+
 
     return str;
 }
