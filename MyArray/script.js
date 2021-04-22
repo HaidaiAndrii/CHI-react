@@ -121,8 +121,6 @@ MyArray.prototype.sortFunction = (fElement, sElement) => {
         return -1;
     }
 
-    console.log(0)
-
     return 0;
 }
 
@@ -140,14 +138,8 @@ MyArray.prototype.sort = function(callback = this.sortFunction) {
             }
         }
     }
+
     return this;
 }
 
-MyArray.prototype.myPush = function(item) {
-    let length = this.length
-    this[length + 1] = item;
-    return this.length;
-}
-
-
-let arr = new MyArray(1, 2, 3, 4, 5);
+let arr = new MyArray(1, 2, 3, 4, 5, 'abc,', `asdas`, { 1: 'asda' });
