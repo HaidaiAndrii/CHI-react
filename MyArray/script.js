@@ -41,6 +41,7 @@ MyArray.prototype.unshift = function(...args) {
 };
 
 MyArray.prototype.map = function(callback) {
+    if (typeof callback !== 'function') throw new Error(`${callback} is not a function`);
     let res = new MyArray();
 
     for (let i = 0; i < this.length; i++) {
@@ -89,7 +90,10 @@ MyArray.prototype.toString = function() {
 }
 
 MyArray.prototype.reduce = function(callback, initialValue) {
+    if (typeof callback !== 'function') throw new Error(`${callback} is not a function`);
+
     let currentValue = initialValue;
+    console.log(currentValue, 'cur');
     let index = 0;
 
     if (currentValue === undefined) {
@@ -99,15 +103,15 @@ MyArray.prototype.reduce = function(callback, initialValue) {
 
     for (index; index < this.length; index++) {
         currentValue = callback(currentValue, this[index], index, this);
+        console.log(currentValue);
     }
 
     return currentValue;
 };
 
 MyArray.prototype.sortFunction = (fElement, sElement) => {
-    firstElement = toString(fElement);
-    secondElement = toString(sElement);
-
+    let firstElement = toString(fElement);
+    let secondElement = toString(sElement);
 
     if (firstElement > secondElement) {
         return 1;
@@ -117,9 +121,9 @@ MyArray.prototype.sortFunction = (fElement, sElement) => {
         return -1;
     }
 
-    if (firstElement = secondElement) {
-        return 0;
-    }
+    console.log(0)
+
+    return 0;
 }
 
 MyArray.prototype.sort = function(callback = this.sortFunction) {
@@ -138,5 +142,12 @@ MyArray.prototype.sort = function(callback = this.sortFunction) {
     }
     return this;
 }
+
+MyArray.prototype.myPush = function(item) {
+    let length = this.length
+    this[length + 1] = item;
+    return this.length;
+}
+
 
 let arr = new MyArray(1, 2, 3, 4, 5);
