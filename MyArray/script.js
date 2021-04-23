@@ -138,6 +138,7 @@ MyArray.prototype.sort = function(callback) {
     return this;
 };
 
+
 MyArray.prototype.from = function(array, callback, thisArg) {
     if (array === undefined) {
         return;
