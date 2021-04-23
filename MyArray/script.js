@@ -26,7 +26,6 @@ MyArray.prototype.push = function(...args) {
 
 MyArray.prototype.unshift = function(...args) {
 
-
     for (let j = args.length; j > 0; j--) {
         for (let i = this.length; i > 0; i--) {
             this[i] = this[i - 1];
@@ -86,7 +85,6 @@ MyArray.prototype.pop = function() {
 MyArray.prototype.toString = function() {
     let str = '';
     for (let i = 0; i < this.length; i++) {
-
         i === this.length - 1 ? str += `${this[i]}` : str += `${this[i]},`;
     }
 
@@ -112,10 +110,9 @@ MyArray.prototype.reduce = function(callback, initialValue) {
 };
 
 MyArray.prototype.sort = function(callback) {
-    if (typeof callback !== 'function') {
+    if (typeof callback !== 'function' && callback !== undefined) {
         throw new TypeError(callback + ' is not a function');
     }
-
     if (callback) {
         for (let i = 0; i < this.length - 1; i++) {
             for (let j = 0; j < this.length - 1; j++) {
@@ -159,4 +156,5 @@ MyArray.prototype.from = function(array, callback, thisArg) {
     return newArray;
 };
 
-let arr = new MyArray(1, 2, 3, 4, 5);
+let arr = new MyArray(1, 2, 100, 6, 7, 18, 20, 3, 4, 5);
+console.log(arr.sort())
