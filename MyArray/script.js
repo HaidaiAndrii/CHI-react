@@ -52,6 +52,8 @@ MyArray.prototype.map = function(callback) {
 }
 
 MyArray.prototype.forEach = function(callback) {
+    if (typeof callback !== 'function') throw new Error(`${callback} is not a function`);
+
     for (let i = 0; i < this.length; i++) {
         callback(this[i], i, this);
     }
@@ -60,6 +62,8 @@ MyArray.prototype.forEach = function(callback) {
 }
 
 MyArray.prototype.filter = function(callback) {
+    if (typeof callback !== 'function') throw new Error(`${callback} is not a function`);
+
     let res = new MyArray();
     for (let i = 0; i < this.length; i++) {
         if (callback(this[i], i, this)) {
@@ -93,7 +97,6 @@ MyArray.prototype.reduce = function(callback, initialValue) {
     if (typeof callback !== 'function') throw new Error(`${callback} is not a function`);
 
     let currentValue = initialValue;
-    console.log(currentValue, 'cur');
     let index = 0;
 
     if (currentValue === undefined) {
@@ -101,9 +104,8 @@ MyArray.prototype.reduce = function(callback, initialValue) {
         currentValue = this[0];
     }
 
-    for (index; index < this.length; index++) {
+    for (; index < this.length; index++) {
         currentValue = callback(currentValue, this[index], index, this);
-        console.log(currentValue);
     }
 
     return currentValue;
@@ -138,7 +140,6 @@ MyArray.prototype.sort = function(callback) {
     return this;
 };
 
-
 MyArray.prototype.from = function(array, callback, thisArg) {
     if (array === undefined) {
         return;
@@ -158,4 +159,4 @@ MyArray.prototype.from = function(array, callback, thisArg) {
     return newArray;
 };
 
-let arr = new MyArray(1, 2, 3, 4, 5, 'abc,', `asdas`, { 1: 'asda' });
+let arr = new MyArray(1, 2, 3, 4, 5);
