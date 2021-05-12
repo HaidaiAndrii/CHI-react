@@ -1,36 +1,95 @@
 import './App.css';
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Redirect,
+  Link,
 } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Login } from './Components/Login/Login';
 import { UsersTable } from './Components/usersTable/UsersTable';
+import { UserComponent } from './Components/UserComponent/UserComponent';
 
 function App() {
+  let [selectedUser, setUser] = useState();
+  let [users, setUsers] = useState([]);
+  let history = useHistory() || [];
+  let [defaultUser, setDefUser] = useState({});
+  useEffect(() => {
+    checkUser();
+  },[]);
+  
+  let [isLogined, setLoginStatus] = useState(localStorage.getItem('reactUser') ? (JSON.parse(localStorage.getItem('reactUser')).isLogined) : false);
+  console.log((JSON.parse(localStorage.getItem('reactUser'))))
+
+  async function checkUser() {
+    if(!localStorage.getItem('reactUser')) {
+        localStorage.setItem('reactUser',JSON.stringify({
+            login: 'user',
+            pass: 'user',
+            isLogined: false
+        }));
+    }
+    setDefUser(JSON.parse(localStorage.getItem('reactUser')));
+}
+
+  function logOut() {
+    localStorage.setItem('reactUser',JSON.stringify({
+      login: 'user',
+      pass: 'user',
+      isLogined: false
+  }));
+
+  history.push("/login");
+
+  setLoginStatus((JSON.parse(localStorage.getItem('reactUser')).isLogined));
+  }
+
+  function  getUsers() {
+    return  fetch('https://jsonplaceholder.typicode.com/users')
+   .then((response) => {
+     return response.json();
+   })
+   .then((data) => {
+     setUsers(data);
+     return data;
+       });
+ }
+
   return (
     <Router>
-      {/* <div>
+      <div>
         <ul>
           <li>
             <Link to="/login">Login</Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/table">Table</Link>
           </li>
           <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>
+          <li>
+            <button type="button" onClick={logOut}>Log out</button>
+          </li>
         </ul>
-        <hr /> */}
+        <hr />
+        </div>
         <Switch>
-          <Route exact path="/login">
-            <Login />
+          <Route path="/login">
+            {isLogined ? <Redirect push to="/table" /> : <Login isLogined={isLogined} setLoginStatus={setLoginStatus} defaultUser={defaultUser} />}
           </Route>
+          <Route path="/table/:id">
+            <UserComponent  isLogined={isLogined} users={users} selectedUser={selectedUser} getUsers={getUsers} />
+          </Route>
+          {/* <Route exect path="/">
+            <Redirect to="/login" />
+          </Route> */}
           <Route path="/table">
-            <UsersTable />
+            {isLogined ? <UsersTable users={users} setUsers={setUsers} isLogined={isLogined} getUsers={getUsers} /> : <Redirect push to="/login" />}
+            {/* <UsersTable /> */}
           </Route>
         </Switch>
       {/* </div> */}

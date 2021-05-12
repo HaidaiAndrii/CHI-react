@@ -1,46 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import { TableRow } from '../TableRow/TableRow';
-// import {
-//     BrowserRouter as Router,
-//     Switch,
-//     Route,
-//     Link
-//   } from "react-router-dom";
-  // import { useHistory } from "react-router-dom";
 
-// import style from './style.module.css';
 
-export  function UsersTable() {
-  let [users, setUsers] = useState([]);
+export  function UsersTable({isLogined, users, getUsers}) {
+
+  let [sorted, setSorted] = useState(false);
 
     useEffect(() => {
       getUsers();
-      console.log(users);
-       },[]);
+       }, [isLogined]);
+
+       function sortBy(value) {
+         console.log(value);
+
+        if(value === 'id') {
+
+          users.sort((a,b) => {
+            return a.id - b.id;
+          }) 
+        }
+          else {
+            users.sort((a,b) => {
+             let valueA = a[value.trim()].toLowerCase();
+             let valueB = b[value.trim()].toLowerCase();
+
+             if(valueA < valueB) {
+               return -1;
+             }
+
+             if(valueA > valueB) {
+               return 1;
+             }
+
+             return 0
+            })
+          }
+
+          setSorted(!sorted)
+       }
 
      return (
       <div>
         <table>
           <thead>
-            <tr><th>id</th><th>name</th><th>username</th><th>email</th></tr>
+            <tr>
+              <th onClick={(e) => sortBy(e.target.innerHTML)}>id</th>
+              <th  onClick={(e) => sortBy(e.target.innerHTML)}>name</th><th  onClick={(e) => sortBy(e.target.innerHTML)}>username</th>
+              <th  onClick={(e) => sortBy(e.target.innerHTML)}> email</th>
+              </tr>
           </thead>
           <tbody>
             {users.length && users.map(user => {
-             return <TableRow user={user} key={user.id} />
+             return <TableRow user={user} key={user.id}  />
             })}
           </tbody>
           </table>
       </div>
      );
-
-     function  getUsers() {
-       return  fetch('https://jsonplaceholder.typicode.com/users')
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setUsers( data);
-      });
-    }
-      
 }

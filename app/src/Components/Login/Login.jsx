@@ -1,43 +1,44 @@
-import React, { useState } from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-  } from "react-router-dom";
-  import { useHistory } from "react-router-dom";
-
+import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import style from './style.module.css';
 
-
-
-export const Login = () => {
-    let [isLogin, setLoginStatus] = useState(false)
+export const Login = ({isLogined, setLoginStatus, defaultUser  }) => {
     let [userLogin, setLogin] = useState(false)
     let [userPass, setPass] = useState(false)
     let history = useHistory();
+   
 
-    function logining () {
-        validation(userLogin, userPass);
-        console.log(isLogin)
-        if(isLogin) {
+    useEffect(() => {
+        console.log(isLogined);
+
+    },[]);
+
+    async function logining () {
+        // await
+        //  validation(userLogin, userPass);
+        if(userLogin === defaultUser.login && userPass === defaultUser.pass) {
+            setLoginStatus(true);
+
             console.log('your in');
-            console.log(userLogin);
-            console.log(userPass);
+            localStorage.removeItem('reactUser');
+            console.log(localStorage.getItem('reactUser'))
+
+            localStorage.setItem('reactUser' ,JSON.stringify({
+                login: 'user',
+                pass: 'user',
+                isLogined: true,
+            }));
             history.push("/table");
         }
     }
-    
+
     function validation(login, pass) {
         setLoginStatus(true);
-
-        if(login.length === 0) {
-            console.log('login is empty')
+        if(login !== defaultUser.login) {
             setLoginStatus(false);
         }
         
-        if(pass.length === 0) {
-            console.log('pass is empty');
+        if(pass !== defaultUser.pass) {
             setLoginStatus(false);
         }
     }
