@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
-  useLocation
+  useLocation,
+  useHistory
 } from "react-router-dom";
 import styles from './styles.module.css';
 
@@ -14,6 +15,7 @@ export function UserComponent({ isLogined }) {
     let [userName, setUserName] = useState('');
     let [email, setEmail] = useState('');
     let [website, setWebsite] = useState('');
+    let history = useHistory() || [];
     
     function getUser() {
         fetch(`https://jsonplaceholder.typicode.com/users/${location.pathname.slice(7)}`)
@@ -48,7 +50,7 @@ export function UserComponent({ isLogined }) {
             }
           })
 
-          console.log(response.status);
+          history.push('/table');
     }
 
 

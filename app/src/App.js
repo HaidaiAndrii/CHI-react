@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,9 +20,8 @@ function App() {
   useEffect(() => {
     checkUser();
   },[]);
-  
+
   let [isLogined, setLoginStatus] = useState(localStorage.getItem('reactUser') ? (JSON.parse(localStorage.getItem('reactUser')).isLogined) : false);
-  console.log((JSON.parse(localStorage.getItem('reactUser'))))
 
   async function checkUser() {
     if(!localStorage.getItem('reactUser')) {
@@ -65,7 +64,7 @@ function App() {
             <Link className="link" to="/table">Table</Link>
 
             {isLogined ?   <a className="link" href="#" onClick={logOut}>Log out</a> :  <Link className="link" to="/login">Login</Link> }
-
+            
         </div>
         <Switch>
           <Route path="/login">

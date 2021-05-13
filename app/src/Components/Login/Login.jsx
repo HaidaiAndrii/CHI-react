@@ -14,8 +14,7 @@ export const Login = ({isLogined, setLoginStatus, defaultUser  }) => {
     },[]);
 
     async function logining () {
-        // await
-        //  validation(userLogin, userPass);
+
         if(userLogin === defaultUser.login && userPass === defaultUser.pass) {
             setLoginStatus(true);
 
@@ -29,17 +28,6 @@ export const Login = ({isLogined, setLoginStatus, defaultUser  }) => {
                 isLogined: true,
             }));
             history.push("/table");
-        }
-    }
-
-    function validation(login, pass) {
-        setLoginStatus(true);
-        if(login !== defaultUser.login) {
-            setLoginStatus(false);
-        }
-        
-        if(pass !== defaultUser.pass) {
-            setLoginStatus(false);
         }
     }
 

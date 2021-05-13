@@ -7,7 +7,6 @@ export function TableRow({ user  }) {
 
   function aboutUser(id) {
     history.push(`/table/${id}`);
-    console.log('click', id)
   }
 
     return(
