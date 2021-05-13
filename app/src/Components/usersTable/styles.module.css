@@ -1,0 +1,31 @@
+.title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 80px;
+}
+
+.table {
+    margin: 0 auto;
+    width: 80%;
+    max-width: 800px;
+}
+
+.tableHeader {
+    background-color: black;
+    color: white;
+    padding: 0px;
+}
+
+.tableTr {
+    padding: 0 ;
+    height: 40px;
+}
+
+.tableTh {
+    padding: 0;
+    width: 20%;
+}
+
+.tableTd {
+    text-align: center;
+}

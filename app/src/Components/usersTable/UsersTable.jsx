@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TableRow } from '../TableRow/TableRow';
-
+import styles from './styles.module.css';
 
 export  function UsersTable({isLogined, users, getUsers}) {
 
@@ -41,13 +41,15 @@ export  function UsersTable({isLogined, users, getUsers}) {
 
      return (
       <div>
-        <table>
-          <thead>
-            <tr>
-              <th onClick={(e) => sortBy(e.target.innerHTML)}>id</th>
-              <th  onClick={(e) => sortBy(e.target.innerHTML)}>name</th><th  onClick={(e) => sortBy(e.target.innerHTML)}>username</th>
-              <th  onClick={(e) => sortBy(e.target.innerHTML)}> email</th>
-              </tr>
+        <h2 className={styles.title}>Users List</h2>
+        <table className={styles.table}>
+          <thead className={styles.tableHeader}>
+            <tr className={styles.tableTr}>
+              <th className={styles.tableTh} onClick={(e) => sortBy(e.target.innerHTML)}>id</th>
+              <th className={styles.tableTh} onClick={(e) => sortBy(e.target.innerHTML)}>name</th>
+              <th className={styles.tableTh} onClick={(e) => sortBy(e.target.innerHTML)}>username</th>
+              <th className={styles.tableTh} onClick={(e) => sortBy(e.target.innerHTML)}> email</th>
+            </tr>
           </thead>
           <tbody>
             {users.length && users.map(user => {

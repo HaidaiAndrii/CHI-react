@@ -46,7 +46,7 @@ export const Login = ({isLogined, setLoginStatus, defaultUser  }) => {
 return(
     <div className={style.formbox}>
           <form className={style.form}>
-            <title className={style.title}></title>
+          <h2 className={style.title}>Sign In</h2>
           <input className={style.input} type="text" placeholder="Login" onChange={(event) => setLogin(event.target.value)} />
           <input   className={style.input} type="pass" placeholder="Password" onChange={(event) => setPass(event.target.value)} />
           <button  className={style.button} type="button" onClick={logining}>Login</button>

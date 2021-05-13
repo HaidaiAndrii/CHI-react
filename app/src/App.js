@@ -60,22 +60,12 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/table">Table</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <button type="button" onClick={logOut}>Log out</button>
-          </li>
-        </ul>
-        <hr />
+      <div className="header">
+
+            <Link className="link" to="/table">Table</Link>
+
+            {isLogined ?   <a className="link" href="#" onClick={logOut}>Log out</a> :  <Link className="link" to="/login">Login</Link> }
+
         </div>
         <Switch>
           <Route path="/login">
@@ -84,15 +74,11 @@ function App() {
           <Route path="/table/:id">
             <UserComponent  isLogined={isLogined} users={users} selectedUser={selectedUser} getUsers={getUsers} />
           </Route>
-          {/* <Route exect path="/">
-            <Redirect to="/login" />
-          </Route> */}
+
           <Route path="/table">
             {isLogined ? <UsersTable users={users} setUsers={setUsers} isLogined={isLogined} getUsers={getUsers} /> : <Redirect push to="/login" />}
-            {/* <UsersTable /> */}
           </Route>
         </Switch>
-      {/* </div> */}
     </Router>
   );
 }

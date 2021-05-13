@@ -1,0 +1,13 @@
+.tableTd {
+    /* text-align: center; */
+}
+
+.tableTr {
+    padding: 0 ;
+    height: 40px;
+    cursor: pointer;
+}
+
+.tableTr:hover {
+    background-color: rgb(213, 213, 213);
+}
