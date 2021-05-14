@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { TableRow } from "../TableRow/TableRow";
 import Header from "./Header";
+import { getUsers } from '../../API/fetchs'
 
 import styles from "./styles.module.css";
 
-export function UsersTable({ isLogined, users, getUsers }) {
+export function UsersTable({setUsers, isLogined, users }) {
   let [sorted, setSorted] = useState(false);
+  let [sortedField, setSortedField] = useState('');
 
   useEffect(() => {
-    getUsers();
+     getUsers().then(data => setUsers(data))
   }, [isLogined]);
 
-  function sortBy(field, arr) {
+  function handleSort(field, arr) {
     if (Number.isInteger(arr[0][field])) {
       users.sort((a, b) => {
         if (sorted) {
@@ -24,16 +26,16 @@ export function UsersTable({ isLogined, users, getUsers }) {
       arr.sort((a, b) => {
         let valueA = a[field.trim()].toLowerCase();
         let valueB = b[field.trim()].toLowerCase();
-
+        
         if (sorted) {
-          return  valueA > valueB ? 1 : -1;
+          return valueA > valueB ? 1 : -1;
+        } else {
+          return valueA < valueB ? 1 : -1;
         }
-        else {
-          return  valueA < valueB ? 1 : -1;
-         }
       });
     }
-
+    
+    setSortedField(field);
     setSorted(!sorted);
   }
 
@@ -49,21 +51,18 @@ export function UsersTable({ isLogined, users, getUsers }) {
       <table className={styles.table}>
         <thead className={styles.tableHeader}>
           <tr className={styles.tableTr}>
-            <th
-              className={styles.tableTh}
-              onClick={() => sortBy('id', users)}
-            >
-              id
-              <div
+            <th className={styles.tableTh} onClick={() => handleSort("id", users)}>
+               {sortedField === 'id' && <div
                 className={
-                  !sorted
-                    ? `${styles.filterArrow} ${styles.downArrow}`
-                    : `${styles.filterArrow} ${styles.upArrow}`
+                  sorted
+                  ? `${styles.filterArrow} ${styles.downArrow}`
+                  : `${styles.filterArrow} ${styles.upArrow}`
                 }
-              ></div>
+                ></div>
+              }
+                id
             </th>
-            <Header headings={arr} users={users} handleSort={sortBy} />
-
+            <Header headings={arr} users={users} handleSort={handleSort} sorted={sorted} sortedField={sortedField} />
           </tr>
         </thead>
         <tbody>
