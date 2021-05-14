@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import style from './style.module.css';
 
@@ -6,12 +6,6 @@ export const Login = ({isLogined, setLoginStatus, defaultUser  }) => {
     let [userLogin, setLogin] = useState(false)
     let [userPass, setPass] = useState(false)
     let history = useHistory();
-   
-
-    useEffect(() => {
-        console.log(isLogined);
-
-    },[]);
 
     async function logining () {
 

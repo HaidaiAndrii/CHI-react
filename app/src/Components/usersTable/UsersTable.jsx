@@ -11,8 +11,8 @@ export function UsersTable({ isLogined, users, getUsers }) {
     getUsers();
   }, [isLogined]);
 
-  function sortBy(value) {
-    if (value.slice(0, 2) === "id") {
+  function sortBy(field, arr) {
+    if (Number.isInteger(arr[0][field])) {
       users.sort((a, b) => {
         if (sorted) {
           return a.id - b.id;
@@ -21,27 +21,16 @@ export function UsersTable({ isLogined, users, getUsers }) {
         }
       });
     } else {
-      users.sort((a, b) => {
-        let valueA = a[value.trim()].toLowerCase();
-        let valueB = b[value.trim()].toLowerCase();
+      arr.sort((a, b) => {
+        let valueA = a[field.trim()].toLowerCase();
+        let valueB = b[field.trim()].toLowerCase();
 
-        if (valueA < valueB) {
-          if (sorted) {
-            return -1;
-          } else {
-            return 1;
-          }
+        if (sorted) {
+          return  valueA > valueB ? 1 : -1;
         }
-
-        if (valueA > valueB) {
-          if (sorted) {
-            return 1;
-          } else {
-            return -1;
-          }
-        }
-
-        return 0;
+        else {
+          return  valueA < valueB ? 1 : -1;
+         }
       });
     }
 
@@ -62,7 +51,7 @@ export function UsersTable({ isLogined, users, getUsers }) {
           <tr className={styles.tableTr}>
             <th
               className={styles.tableTh}
-              onClick={(e) => sortBy(e.target.innerHTML)}
+              onClick={() => sortBy('id', users)}
             >
               id
               <div
@@ -73,7 +62,7 @@ export function UsersTable({ isLogined, users, getUsers }) {
                 }
               ></div>
             </th>
-            <Header headings={arr} handleSort={sortBy} />
+            <Header headings={arr} users={users} handleSort={sortBy} />
 
           </tr>
         </thead>

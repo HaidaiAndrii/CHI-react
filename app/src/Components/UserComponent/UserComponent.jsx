@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  BrowserRouter as Router,
   useLocation,
   useHistory
 } from "react-router-dom";
@@ -42,7 +41,7 @@ export function UserComponent({ isLogined }) {
             website
         }
 
-         let response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+         await fetch('https://jsonplaceholder.typicode.com/posts', {
             method: 'POST',
             body: JSON.stringify(user),
             headers: {

@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,7 +13,6 @@ import { UsersTable } from './Components/usersTable/UsersTable';
 import { UserComponent } from './Components/UserComponent/UserComponent';
 
 function App() {
-  let [selectedUser, setUser] = useState();
   let [users, setUsers] = useState([]);
   let history = useHistory() || [];
   let [defaultUser, setDefUser] = useState({});
@@ -62,16 +61,18 @@ function App() {
       <div className="header">
 
             <Link className="link" to="/table">Table</Link>
-
             {isLogined ?   <a className="link" href="#" onClick={logOut}>Log out</a> :  <Link className="link" to="/login">Login</Link> }
-            
+        
         </div>
         <Switch>
+          {/* <Route exect path="/">
+            <Redirect to="/login" />
+          </Route> */}
           <Route path="/login">
             {isLogined ? <Redirect push to="/table" /> : <Login isLogined={isLogined} setLoginStatus={setLoginStatus} defaultUser={defaultUser} />}
           </Route>
           <Route path="/table/:id">
-            <UserComponent  isLogined={isLogined} users={users} selectedUser={selectedUser} getUsers={getUsers} />
+            <UserComponent  isLogined={isLogined} />
           </Route>
 
           <Route path="/table">
